@@ -70,4 +70,4 @@ Represents an in-app message
 - **body:** body of the message
 - **ctaText:** text that should appear on the CTA button on the message
 - **ctaLink:** url to visit when the user clicks on the CTA button. could be null, if message does not have any relevant urls
-- **type:** type of message. one of [inAppMessage type] enum
+- **type:** type of message. one of [inAppMessage type](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#inappmessage-type) enum
