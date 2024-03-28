@@ -50,7 +50,7 @@ Pagination parameter for users is `lastUserId` and that for posts is `lastPostId
  
 ## Objects
 ### Mention:
-This is a nested type in the [post](https://github.com/O-Thadd/Cripe-Backend/blob/master/API%20Documentation.md#post) object. It represents a user mentioned/tagged in a post.
+This is a nested type in the [post](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#post) object. It represents a user mentioned/tagged in a post.
 #### Attributes
 - **id:** the userId of the tagged user
 - **username:** the username of the tagged user
