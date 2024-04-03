@@ -32,6 +32,22 @@ Pagination parameter for users is `lastUserId` and that for posts is `lastPostId
   - `flag_post_action`: flag a post
   - `unflag_post_action`: _not a specified feature. not yet impemented..._
   - `delete_post_action`: delete a post. Such a request must come from the post owner
+
+- ### room_action
+
+  This is a parameter in the POST `/room` endpoint. Used to specify the action to perform on a room.
+  - `join_room_action`
+  - `leave_room_action`
+
+- ### room_post_action
+
+  This is a parameter in the POST `/room/posts/post` endpoint. Used to specify the action that should be performed on a post in a room.
+  - `flame_room_post_action`: flame a post
+  - `unflame_room_post_action`: unflame a post
+  - `flag_room_post_action`: flag a post
+  - `unflag_room_post_action`: _not a specified feature. not yet impemented..._
+  - `delete_room_post_action`: delete a post. Such a request must come from the post owner
+
 - ### user_action
 
   This is a parameter in the `/users/user` endpoint. Used to specify the action that should be performed on a user.
@@ -47,6 +63,17 @@ Pagination parameter for users is `lastUserId` and that for posts is `lastPostId
   - `mention_notification_event`: when a user is mentioned/tagged in a post.
   - `flame_notification_event`: when a user's post is flamed
   - `response_notification_event`: when another user responds/comments/replies to a user's post.
+
+- ### cripe rank
+
+  A user's cripe rank
+  - `Anonymous`
+  - `Shadow`
+  - `Whisperer`
+  - `Specter`
+  - `Ghost`
+  - `Veiled`
+  
  
 ## Objects
 ### Mention:
@@ -72,6 +99,39 @@ Represents an in-app message
 - **ctaLink:** URL to visit when the user clicks on the CTA button. Could be null, if message does not have any relevant url
 - **type:** Type of message. one of [inAppMessage type](https://github.com/O-Thadd/Cripe-API-Doc/edit/master/API%20Documentation.md#inappmessage-type) enum
 
+### GiftMessage
+Represents a gift message
+#### Attributes
+- **id:** Unique identifier of the message
+- **senderId:** Id of user who sent this message
+- **body:** Body of the message
+- **timestamp:** _(Number)_ Time the message was sent in millis from epoch
+
+### Room
+Represents a room
+#### Attributes
+- **id:** Unique identifier of the room
+- **hostId:** Id of the user who started this room i.e. the host
+- **title:** Title of the room
+- **colour:** Colour theme of the room as hexadecimal RGB triples. e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
+- **creationTime:** _(Number)_ Time the room was created in millis from epoch
+- **participantCount:** _(Number)_ The number of users in the room
+- **peepedUsers:** Array of users representing 5 or less randomly selected participants in the room
+
+### RoomPost
+Represent a message in a room
+#### Attributes
+- **id:** unique identifier of the post
+- **posterId:** id of user who made the post
+- **roomId:** id of the room inwhich this post was sent
+- **timestamp:** _(number)_ when post was made in milliseconds from epoch
+- **body:** Content of the post
+- **flameCount:** _(number)_ number of flames post has
+- **flagCount:** _(number)_ number of times a post has been flagged. this will always be null except when the request is made by an admin
+- **mentions:** array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#mention)s. Each represents a user tagged/mentioned in the post
+- **flamed:** _(boolean)_ indicates if requester flamed this post
+
+
 ### NotificationData
 Represents a notification
 #### Attributes
@@ -93,6 +153,7 @@ Represents a post
 - **posterId:** id of user who made the post
 - **timestamp:** _(number)_ when post was made in milliseconds from epoch
 - **body:** _(array of strings)_ Each string represents a page of the post
+- **background:** The background colour of the post as hexadecimal RGB triples. e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
 - **optionVotePairs:** _(map)_ Maps an option to number of votes accrued
 - **flameCount:** _(number)_ number of flames post has
 - **commentCount:** _(number)_ number of comments a post has.
@@ -112,6 +173,15 @@ Represents a user
 - **id:** id of user
 - **username:** username of user
 - **avatar:** _(number)_ number indicating the avatar of the user
+- **crip:** A crip object. Summary of a the user's cripe rank details.
+
+### Crip
+Represents a user's cripe rank details
+#### Attributes
+- **count:** _(Number)_ Total crips this user has
+- **rank:** The cripe rank of this user. One of the cripe ranks enum
+- **progress:** _(Number)_  A number between 0 and 1, representing the progress of the user in the current rank. This will be null if user is at highest rank i.e. Veiled
+
   
 
 ## Endpoints
@@ -298,7 +368,7 @@ Success
   }
   ```
 
-  Failure: providing username and searchTerm
+  Failure: providing username and searchTerm together
   ```
   {
     "status": "operation_failure",
@@ -316,7 +386,25 @@ Success
   - **user_action:** _(Required)_ Action to be taken on the user. One of the [user_action](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#user_action) enum
 - **Constraints:**
   - userId provided must match owner of the token or password used to make the request
-    
+
+#### Send gift message
+`POST /users/user/giftMessages`
+- **Description:** Sends a gift message to a user
+- **Security:** 1
+- **Parameters:**
+  - **recipientId:** Id of the user the message is being sent to
+  - **body:** Body of the message being sent
+- **Returns:** The id of the message
+
+
+#### Get gift messages
+`GET /users/user/giftMessages`
+- **Description:** Gets a user's gift messages
+- **Security:** 1
+- **Parameters:**
+  - **last_messageId:** The id of the last message in the previous request. see pagination
+  - **last_message_timestamp:** The timestamp of the last message in the previous request. see pagination
+- **Returns:** An array of GiftMessage objects
    
 #### Get notifications
 `GET /users/user/notifications`
@@ -353,6 +441,64 @@ Success
 > Maximum of 50 notifications is provided
 > 
 > Notifications are wiped after each request.
+
+
+### Rooms
+#### Create a room
+`POST /rooms`
+- **Description:** creates a room
+- **Security:** 1
+- **Parameters:**
+  - **title:** Title of the room
+  - **colour:** Theme colour of the room as hexadecimal RGB triples. e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
+- **Returns:** The id of the newly created rooms
+
+#### Get rooms
+`GET /rooms`
+- **Description:** Gets rooms
+- **Security:** 0
+- **Parameters:**
+  - **last_roomId:** Id of the room in the previous request. See pagination
+- **Returns:** Array of Room objects
+
+#### Interact with a room
+`POST /rooms/room`
+- **Description:** Interacts with a room. Such as joining, leaving, etc
+- **Security:** 1
+- **Parameters:**
+  - **roomId:** Id of the room
+  - **room_action:** Action to be taken on a room. One of the room actions enum
+ 
+#### Post message in a room
+`POST /rooms/room/posts`
+- **Description:** Posts a message in a room.
+- **Security:** 1
+- **Parameters:**
+  - **roomId:** Id of room
+  - **body:** Body of the message
+  - **mentions:** Json array of Mention objects representing users tagged in the message
+  - **Returns:** Id of the message
+
+
+  #### Get messages in a room
+  `GET /rooms/room/posts`
+  - **Description:** Gets messages in room
+  - **Security:** 1
+  - **Parameters:**
+    - **roomId:** Id of the room
+    - **last_post_timestamp:** _(Number)_ Timestamp of the last post in the previous request. See pagination.
+    - **last_postId:** Id of the last post in the previous request. See pagination
+  - **Returns:** Array of RoomPost objects
+
+
+ #### Interact with a message in a room
+ `POST /rooms/room/posts/post`
+ - **Description** Performs action on a post in a room
+ - **Security:** 1
+ - **Parameters:**
+   - **roomId:** Id of the room
+   - **postId:** Id of the post/message
+   - **room_post_action:** Action to be taken on the post. One of the room post action enums 
 
 
 
