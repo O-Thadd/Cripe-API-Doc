@@ -119,10 +119,11 @@ Represents a room
 - **peepedUsers:** Array of users representing 5 or less randomly selected participants in the room
 
 ### RoomPost
-Represent a message in a room
+Represents a message in a room
 #### Attributes
 - **id:** unique identifier of the post
 - **posterId:** id of user who made the post
+- **posterUsername:** name of user who made the post
 - **roomId:** id of the room inwhich this post was sent
 - **timestamp:** _(number)_ when post was made in milliseconds from epoch
 - **body:** Content of the post
@@ -151,9 +152,10 @@ Represents a post
 #### Attributes
 - **id:** unique identifier of the post
 - **posterId:** id of user who made the post
+- **posterUsername:** name of user who made the post
 - **timestamp:** _(number)_ when post was made in milliseconds from epoch
 - **body:** _(array of strings)_ Each string represents a page of the post
-- **background:** The background colour of the post as hexadecimal RGB triples. e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
+- **background:** The background colour of the post as hexadecimal RGB triples with a leading '#' e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
 - **optionVotePairs:** _(map)_ Maps an option to number of votes accrued
 - **flameCount:** _(number)_ number of flames post has
 - **commentCount:** _(number)_ number of comments a post has.
@@ -173,14 +175,14 @@ Represents a user
 - **id:** id of user
 - **username:** username of user
 - **avatar:** _(number)_ number indicating the avatar of the user
-- **crip:** A crip object. Summary of a the user's cripe rank details.
+- **crip:** A [Crip](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#crip) object. Summary of a the user's cripe rank details.
 
 ### Crip
 Represents a user's cripe rank details
 #### Attributes
 - **count:** _(Number)_ Total crips this user has
-- **rank:** The cripe rank of this user. One of the cripe ranks enum
-- **progress:** _(Number)_  A number between 0 and 1, representing the progress of the user in the current rank. This will be null if user is at highest rank i.e. Veiled
+- **rank:** The cripe rank of this user. One of the [cripe ranks](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#cripe-rank) enum
+- **progress:** _(Number)_  A number between 0 and 1, representing the progress of the user in the current rank. This will be null if user is at the highest rank i.e. Veiled
 
   
 
@@ -208,7 +210,7 @@ Represents a user's cripe rank details
   - **body:** _(required)_ Array of strings. Each value is a string that is the content of a page in the new post. (when the post is a poll then this array has to have a single value that is the body of the poll, since polls cannot have multiple pages).
   - **options:**  _(array of strings)_ Used with a poll. each value is an option for the new poll
   - **duration:** _(number)_ Used when it is a post. Duration of poll in milliseconds.
-  - **parentPostId:** For responses i.e. comments. The id of the post that this post is responding to.
+  - **parent_postId:** For responses i.e. comments. The id of the post that this post is responding to.
   - **mentions:** _(array of [mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention)s)_ Each value is a mention object which represents a user tagged in a post
   - **background:** The background colour of the post as hexadecimal RGB triples. e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
 
@@ -229,9 +231,9 @@ Represents a user's cripe rank details
 - **Parameters:**
   - **postId:** id of a post. provide this to get a particular post
   - **posterId:** id of user. provide this to get posts by a particular user.
-  - **parentPostId:** id of a post. provide this to get responses/replies to a post.
-  - **lastPostTimestamp:** _(Number)_ Timestamp of the last post in the previously returned posts. use after the 1st request to get more results. See [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination)
-  - **lastPostId:** same use-case as lastTimestamp. the postId of the last post in the previous request.
+  - **parent_postId:** id of a post. provide this to get responses/replies to a post.
+  - **last_post_timestamp:** _(Number)_ Timestamp of the last post in the previously returned posts. use after the 1st request to get more results. See [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination)
+  - **last_postId:** same use-case as lastTimestamp. the postId of the last post in the previous request.
   - **requesterId:** id of requester. Used to tailor response to requester. Such as indicating posts previously flamed, or polls already voted in
 - **Constraints:**
   - when postId is provided; posterId, parentPostId, lastPostId or lastPostTimestamp should not be provided
@@ -284,7 +286,7 @@ Represents a user's cripe rank details
   - **Parameter:**
     - **postId:** _(Required)_ id of post
     - **post_action:** _(Required)_ action to be taken. one of [post_action](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#post_action) enum.
-    - **optionToVote:** used when voting a post i.e. a poll; with `vote_post_action`. The option to vote for.
+    - **option_to_vote:** used when voting a post i.e. a poll; with `vote_post_action`. The option to vote for.
   
 
 
@@ -332,8 +334,8 @@ Success
 - **Parameters:**
   - **userId:** userId of user to be retrieved
   - **username:** username of user to be retrieved
-  - **searchTerm:** whole or part of a username. used to search for users by username
-  - **lastUserId:** the full username of the last user in the previous page. used after the 1st request to get subsequent pages. see [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination).
+  - **search_term:** whole or part of a username. used to search for users by username
+  - **last_userId:** the full username of the last user in the previous page. used after the 1st request to get subsequent pages. see [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination).
 - **Constraints:**
 
   one, and only one of userId, username and searchTerm may be provided
@@ -415,8 +417,8 @@ Success
 - **Security:** 1
 - **Parameters:**
   - **last_messageId:** The id of the last message in the previous request. see pagination
-  - **last_message_timestamp:** The timestamp of the last message in the previous request. see pagination
-- **Returns:** An array of GiftMessage objects
+  - **last_message_timestamp:** The timestamp of the last message in the previous request. see [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination)
+- **Returns:** An array of [GiftMessage](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#giftmessage) objects
    
 #### Get notifications
 `GET /users/user/notifications`
@@ -470,8 +472,8 @@ Success
 - **Description:** Gets rooms
 - **Security:** 0
 - **Parameters:**
-  - **last_roomId:** Id of the room in the previous request. See pagination
-- **Returns:** Array of Room objects
+  - **last_roomId:** Id of the room in the previous request. See [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination)
+- **Returns:** Array of [Room](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#room) objects
 
 #### Interact with a room
 `POST /rooms/room`
@@ -479,7 +481,7 @@ Success
 - **Security:** 1
 - **Parameters:**
   - **roomId:** Id of the room
-  - **room_action:** Action to be taken on a room. One of the room actions enum
+  - **room_action:** Action to be taken on a room. One of the [room actions](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#room_action) enum
  
 #### Post message in a room
 `POST /rooms/room/posts`
@@ -488,7 +490,7 @@ Success
 - **Parameters:**
   - **roomId:** _(Required)_ Id of room
   - **body:** _(Required)_ Body of the message
-  - **mentions:** Json array of Mention objects representing users tagged in the message
+  - **mentions:** Json array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention) objects representing users tagged in the message
 - **Returns:** Id of the message
 
 
@@ -499,8 +501,8 @@ Success
   - **Parameters:**
     - **roomId:** Id of the room
     - **last_post_timestamp:** _(Number)_ Timestamp of the last post in the previous request. See pagination.
-    - **last_postId:** Id of the last post in the previous request. See pagination
-  - **Returns:** Array of RoomPost objects
+    - **last_postId:** Id of the last post in the previous request. See [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination)
+  - **Returns:** Array of [RoomPost](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#attributes-5) objects
 
 
  #### Interact with a message in a room
