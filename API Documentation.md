@@ -205,7 +205,6 @@ Represents a user's cripe rank details
 - **Description:** makes a new post
 - **Security**: 1
 - **Parameters:**
-  - **posterId:** _(required)_ id of poster. i.e. user making this post
   - **body:** _(required)_ Array of strings. Each value is a string that is the content of a page in the new post. (when the post is a poll then this array has to have a single value that is the body of the poll, since polls cannot have multiple pages).
   - **options:**  _(array of strings)_ Used with a poll. each value is an option for the new poll
   - **duration:** _(number)_ Used when it is a post. Duration of poll in milliseconds.
@@ -285,7 +284,6 @@ Represents a user's cripe rank details
   - **Parameter:**
     - **postId:** _(Required)_ id of post
     - **post_action:** _(Required)_ action to be taken. one of [post_action](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#post_action) enum.
-    - **responseBody:** used with action `respond_post_action`. Body of the response.
     - **optionToVote:** used when voting a post i.e. a poll; with `vote_post_action`. The option to vote for.
   
 
@@ -349,19 +347,34 @@ Success
     "error_message": null,
     "response_data": [
         {
-            "id": "0ddddf23-5409-4bba-9f82-49f2dde3eb88",
-            "username": "ulekato",
-            "avatar": 3
+            "id": "4a8862aa-e528-4143-868d-81c352bc7e6c",
+            "username": "katolu",
+            "avatar": 10,
+            "crip": {
+                "count": 0,
+                "rank": "Anonymous",
+                "progress": 0.0
+            }
         },
         {
-            "id": "14ae1b60-caba-475d-bb78-b1bdbd6fdc46",
-            "username": "ulekabo",
-            "avatar": 2
-        },
-        {
-            "id": "9ba60ab8-57af-4705-b61d-5371b23e5b30",
+            "id": "61a06576-619a-439a-b68a-336d9cef8d55",
             "username": "mr. ule",
-            "avatar": 1
+            "avatar": 13,
+            "crip": {
+                "count": 220,
+                "rank": "Shadow",
+                "progress": 0.3
+            }
+        },
+        {
+            "id": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
+            "username": "ulekabo",
+            "avatar": 5,
+            "crip": {
+                "count": 2,
+                "rank": "Anonymous",
+                "progress": 0.02
+            }
         },
         ...
     ]
@@ -382,7 +395,6 @@ Success
 - **Description:** performs action on a user
 - **Security:** 2
 - **Parameter:**
-  - **userId:** _(Required)_ id of the user
   - **user_action:** _(Required)_ Action to be taken on the user. One of the [user_action](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#user_action) enum
 - **Constraints:**
   - userId provided must match owner of the token or password used to make the request
@@ -449,7 +461,7 @@ Success
 - **Description:** creates a room
 - **Security:** 1
 - **Parameters:**
-  - **title:** Title of the room
+  - **title:** _(Required)_ Title of the room
   - **colour:** Theme colour of the room as hexadecimal RGB triples. e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
 - **Returns:** The id of the newly created rooms
 
@@ -474,10 +486,10 @@ Success
 - **Description:** Posts a message in a room.
 - **Security:** 1
 - **Parameters:**
-  - **roomId:** Id of room
-  - **body:** Body of the message
+  - **roomId:** _(Required)_ Id of room
+  - **body:** _(Required)_ Body of the message
   - **mentions:** Json array of Mention objects representing users tagged in the message
-  - **Returns:** Id of the message
+- **Returns:** Id of the message
 
 
   #### Get messages in a room
