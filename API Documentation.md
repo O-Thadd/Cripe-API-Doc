@@ -249,19 +249,61 @@ Represents a user's cripe rank details
     "error_message": null,
     "response_data": [
         {
-            "id": "e62a3488-489c-4982-a50d-e2274a7cc016",
-            "posterId": "9ba60ab8-57af-4705-b61d-5371b23e5b30",
-            "timestamp": 1711413166029,
+            "id": "194e1ec6-81a6-4b5d-80f6-7d48083b265e",
+            "posterId": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
+            "posterUsername": "ulekabo",
+            "timestamp": 1712220073854,
             "body": [
-                "im so happy to be on cripe. it is a great app"
+                "honestly kai. you sabi"
             ],
+            "background": "#000000",
+            "optionVotePairs": null,
+            "flameCount": 0,
+            "commentCount": 1,
+            "flagCount": null,
+            "duration": null,
+            "closed": null,
+            "parentPostId": "295de2f6-0bb2-42af-9e15-8b44f1f339ee",
+            "mentions": null,
+            "flamed": false,
+            "voted": null
+        },
+        {
+            "id": "44a2aabd-41b1-4c6f-bf3c-92614bed55b0",
+            "posterId": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
+            "posterUsername": "ulekabo",
+            "timestamp": 1712218731266,
+            "body": [
+                "true talk. no cap"
+            ],
+            "background": "#000000",
             "optionVotePairs": null,
             "flameCount": 0,
             "commentCount": 0,
             "flagCount": null,
             "duration": null,
             "closed": null,
-            "parentPostId": null,
+            "parentPostId": "295de2f6-0bb2-42af-9e15-8b44f1f339ee",
+            "mentions": null,
+            "flamed": false,
+            "voted": null
+        },
+        {
+            "id": "2548a46f-921e-48fe-a130-49741ac2f70a",
+            "posterId": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
+            "posterUsername": "ulekabo",
+            "timestamp": 1712186935110,
+            "body": [
+                "for real mehn. it's so cool"
+            ],
+            "background": "#000000",
+            "optionVotePairs": null,
+            "flameCount": 0,
+            "commentCount": 0,
+            "flagCount": null,
+            "duration": null,
+            "closed": null,
+            "parentPostId": "295de2f6-0bb2-42af-9e15-8b44f1f339ee",
             "mentions": null,
             "flamed": false,
             "voted": null
