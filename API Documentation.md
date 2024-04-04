@@ -24,7 +24,7 @@ Pagination parameter for users is `lastUserId` and that for posts is `lastPostId
 ## Enums
 - ### post_action
 
-  This is a parameter in the [`/posts/post`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#make-a-post) endpoint. Used to specify the action that should be performed on a post.
+  This is a parameter in the [`POST /posts/post`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#make-a-post) endpoint. Used to specify the action that should be performed on a post.
   - `flame_post_action`: flame a post
   - `unflame_post_action`: unflame a post
   - `vote_post_action`: vote an option in a poll post. The option to vote is provided in the `optionToVote` parameter.
@@ -35,13 +35,13 @@ Pagination parameter for users is `lastUserId` and that for posts is `lastPostId
 
 - ### room_action
 
-  This is a parameter in the POST [`/rooms/room`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#interact-with-a-room) endpoint. Used to specify the action to perform on a room.
+  This is a parameter in the [`POST /rooms/room`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#interact-with-a-room) endpoint. Used to specify the action to perform on a room.
   - `join_room_action`
   - `leave_room_action`
 
 - ### room_post_action
 
-  This is a parameter in the POST `/room/posts/post` endpoint. Used to specify the action that should be performed on a post in a room.
+  This is a parameter in the [`POST /room/posts/post`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#post-message-in-a-room) endpoint. Used to specify the action that should be performed on a post in a room.
   - `flame_room_post_action`: flame a post
   - `unflame_room_post_action`: unflame a post
   - `flag_room_post_action`: flag a post
@@ -50,16 +50,16 @@ Pagination parameter for users is `lastUserId` and that for posts is `lastPostId
 
 - ### user_action
 
-  This is a parameter in the `/users/user` endpoint. Used to specify the action that should be performed on a user.
+  This is a parameter in the [`POST /users/user`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#interact-with-user) endpoint. Used to specify the action that should be performed on a user.
   - `reset_fcm_token_user_action`: Reset the fcm token. Should be used when a user logs out or deletes account. This stops notifications from being sent to the device.
   - `delete_user_action`: delete user
 - ### inAppMessage type
 
-  This is an attribute in the InAppMessage object. It indicates the type of the message, if it is a special type; if not, this attribute is null.
+  This is an attribute in the [InAppMessage](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#inappmessage) object. It indicates the type of the message, if it is a special type; if not, this attribute is null.
   - `new_app_version_app_message`: messages informing users of a new app version will have this value in their `type` attribute
 - ### notificationEvent
 
-  This is an attribute in the NotificationData object. It indicates the event for which the notification is being sent.
+  This is an attribute in the [NotificationData](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#notificationdata) object. It indicates the event for which the notification is being sent.
   - `mention_notification_event`: when a user is mentioned/tagged in a post.
   - `flame_notification_event`: when a user's post is flamed
   - `response_notification_event`: when another user responds/comments/replies to a user's post.
@@ -77,14 +77,14 @@ Pagination parameter for users is `lastUserId` and that for posts is `lastPostId
  
 ## Objects
 ### Mention:
-This is a nested type in the [post](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#post) object. It represents a user mentioned/tagged in a post.
+This is a nested type in the [post](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#post) object. It represents a user mentioned/tagged in a post.
 #### Attributes
 - **id:** the userId of the tagged user
 - **username:** the username of the tagged user
-- **inidices:** _(array of [pair](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#pair)s)_ Each pair represents an exact place in the post that the user is tagged. Indeed, a user can be tagged/mentioned multiple times in the same post. Therefore, the size of the array will depend on the number of times the user is tagged in the post.
+- **inidices:** _(array of [pair](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pair)s)_ Each pair represents an exact place in the post that the user is tagged. Indeed, a user can be tagged/mentioned multiple times in the same post. Therefore, the size of the array will depend on the number of times the user is tagged in the post.
 
 ### Pair:
-This is a nested type in the [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#mention) object. It represents an exact position where a tag/mention of user occurs in a post
+This is a nested type in the [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention) object. It represents an exact position where a tag/mention of user occurs in a post
 #### Attributes
 - **first:** _(number)_ Index of the first letter of an occurrence of the username in the post
 - **second:** _(number)_ second: Index of the last letter of the same occurrence of the username in the post
@@ -97,7 +97,7 @@ Represents an in-app message
 - **body:** Body of the message
 - **ctaText:** Text that should appear on the CTA button on the message
 - **ctaLink:** URL to visit when the user clicks on the CTA button. Could be null, if message does not have any relevant url
-- **type:** Type of message. one of [inAppMessage type](https://github.com/O-Thadd/Cripe-API-Doc/edit/master/API%20Documentation.md#inappmessage-type) enum
+- **type:** Type of message. one of [inAppMessage type](https://github.com/O-Thadd/Cripe-API-Doc/edit/main/API%20Documentation.md#inappmessage-type) enum
 
 ### GiftMessage
 Represents a gift message
@@ -128,7 +128,7 @@ Represent a message in a room
 - **body:** Content of the post
 - **flameCount:** _(number)_ number of flames post has
 - **flagCount:** _(number)_ number of times a post has been flagged. this will always be null except when the request is made by an admin
-- **mentions:** array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#mention)s. Each represents a user tagged/mentioned in the post
+- **mentions:** array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention)s. Each represents a user tagged/mentioned in the post
 - **flamed:** _(boolean)_ indicates if requester flamed this post
 
 
@@ -138,7 +138,7 @@ Represents a notification
 - **id:** unique identifier of the notification data
 - **actorId:** id of user who performed the action being notified of
 - **actorUsername:** username of user who performed the action being notified of
-- **event:** the event being notified of. One of [notification event](https://github.com/O-Thadd/Cripe-API-Doc/edit/master/API%20Documentation.md#notificationevent) enum
+- **event:** the event being notified of. One of [notification event](https://github.com/O-Thadd/Cripe-API-Doc/edit/main/API%20Documentation.md#notificationevent) enum
 - **timestamp:** _(number)_ time of notification in milliseconds from epoch
 - **pop:** a suggestion of what to display in the notification for the user
 - **postAncestry:** _(array of strings)_ Contains ids of posts in the subject-post's lineage, starting with subject post till the top most post.
@@ -163,7 +163,7 @@ Represents a post
 - **duration:** _(number)_ applies for a poll. Indicates how long from the time of posting that a poll will remain open to votes
 - **closed:**  _(boolean)_ Applies for a poll. indicates if the poll is closed.
 - **parentPostId:** applies if it is a reply/comment. Id of post that this post was made as response to.
-- **mentions:** array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#mention)s. Each represents a user tagged/mentioned in the post
+- **mentions:** array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention)s. Each represents a user tagged/mentioned in the post
 - **flamed:** _(boolean)_ indicates if requester flamed this post
 - **voted:** _(boolean)_ indicates if requester voted this post(poll)
 
@@ -209,7 +209,7 @@ Represents a user's cripe rank details
   - **options:**  _(array of strings)_ Used with a poll. each value is an option for the new poll
   - **duration:** _(number)_ Used when it is a post. Duration of poll in milliseconds.
   - **parentPostId:** For responses i.e. comments. The id of the post that this post is responding to.
-  - **mentions:** _(array of [mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#mention)s)_ Each value is a mention object which represents a user tagged in a post
+  - **mentions:** _(array of [mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention)s)_ Each value is a mention object which represents a user tagged in a post
   - **background:** The background colour of the post as hexadecimal RGB triples. e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
 
 - **returns:** the id of the newly created post
@@ -230,13 +230,13 @@ Represents a user's cripe rank details
   - **postId:** id of a post. provide this to get a particular post
   - **posterId:** id of user. provide this to get posts by a particular user.
   - **parentPostId:** id of a post. provide this to get responses/replies to a post.
-  - **lastPostTimestamp:** _(Number)_ Timestamp of the last post in the previously returned posts. use after the 1st request to get more results. See [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#pagination)
+  - **lastPostTimestamp:** _(Number)_ Timestamp of the last post in the previously returned posts. use after the 1st request to get more results. See [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination)
   - **lastPostId:** same use-case as lastTimestamp. the postId of the last post in the previous request.
   - **requesterId:** id of requester. Used to tailor response to requester. Such as indicating posts previously flamed, or polls already voted in
 - **Constraints:**
   - when postId is provided; posterId, parentPostId, lastPostId or lastPostTimestamp should not be provided
   - posterId and parentPostId should not be provided together
-- **Returns:** array of requested [Post](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#post) objects
+- **Returns:** array of requested [Post](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#post) objects
 - **Example:**
 
   success:
@@ -283,7 +283,7 @@ Represents a user's cripe rank details
   - **Security:** 1
   - **Parameter:**
     - **postId:** _(Required)_ id of post
-    - **post_action:** _(Required)_ action to be taken. one of [post_action](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#post_action) enum.
+    - **post_action:** _(Required)_ action to be taken. one of [post_action](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#post_action) enum.
     - **optionToVote:** used when voting a post i.e. a poll; with `vote_post_action`. The option to vote for.
   
 
@@ -333,11 +333,11 @@ Success
   - **userId:** userId of user to be retrieved
   - **username:** username of user to be retrieved
   - **searchTerm:** whole or part of a username. used to search for users by username
-  - **lastUserId:** the full username of the last user in the previous page. used after the 1st request to get subsequent pages. see [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#pagination).
+  - **lastUserId:** the full username of the last user in the previous page. used after the 1st request to get subsequent pages. see [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination).
 - **Constraints:**
 
   one, and only one of userId, username and searchTerm may be provided
-- **Returns:** array of [user](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#user) objects
+- **Returns:** array of [user](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#user) objects
 - **Example response:**
 
   Success
@@ -395,7 +395,7 @@ Success
 - **Description:** performs action on a user
 - **Security:** 2
 - **Parameter:**
-  - **user_action:** _(Required)_ Action to be taken on the user. One of the [user_action](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#user_action) enum
+  - **user_action:** _(Required)_ Action to be taken on the user. One of the [user_action](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#user_action) enum
 - **Constraints:**
   - userId provided must match owner of the token or password used to make the request
 
@@ -422,7 +422,7 @@ Success
 `GET /users/user/notifications`
 - **Description:** gets the user's new notifications
 - **Security:** 1
-- **Returns:** array of [NotificationData](https://github.com/O-Thadd/Cripe-API-Doc/blob/master/API%20Documentation.md#notificationdata) objects for the requesting user.
+- **Returns:** array of [NotificationData](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#notificationdata) objects for the requesting user.
 - **Example response:**
   ```
   {
