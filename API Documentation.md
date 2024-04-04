@@ -24,7 +24,7 @@ Pagination parameter for users is `lastUserId` and that for posts is `lastPostId
 ## Enums
 - ### post_action
 
-  This is a parameter in the `/posts/post` endpoint. Used to specify the action that should be performed on a post.
+  This is a parameter in the [`/posts/post`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#make-a-post) endpoint. Used to specify the action that should be performed on a post.
   - `flame_post_action`: flame a post
   - `unflame_post_action`: unflame a post
   - `vote_post_action`: vote an option in a poll post. The option to vote is provided in the `optionToVote` parameter.
@@ -35,7 +35,7 @@ Pagination parameter for users is `lastUserId` and that for posts is `lastPostId
 
 - ### room_action
 
-  This is a parameter in the POST `/room` endpoint. Used to specify the action to perform on a room.
+  This is a parameter in the POST [`/rooms/room`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#interact-with-a-room) endpoint. Used to specify the action to perform on a room.
   - `join_room_action`
   - `leave_room_action`
 
