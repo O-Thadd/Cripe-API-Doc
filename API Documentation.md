@@ -20,6 +20,7 @@ Pagination parameter for users is `lastUserId` and that for posts is `lastPostId
 > - Items are always returned in reverse chronological order. i.e. newest first.
 
 ## Push Notification
+_...under construction..._
 
 ## Enums
 - ### post_action
