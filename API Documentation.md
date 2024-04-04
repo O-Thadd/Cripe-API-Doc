@@ -117,7 +117,7 @@ Represents a room
 - **colour:** Colour theme of the room as hexadecimal RGB triples. e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
 - **creationTime:** _(Number)_ Time the room was created in millis from epoch
 - **participantCount:** _(Number)_ The number of users in the room
-- **peepedUsers:** Array of users representing 5 or less randomly selected participants in the room
+- **peepedUsers:** Array of [user](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#user)s representing 5 or less randomly selected participants in the room
 
 ### RoomPost
 Represents a message in a room
@@ -420,6 +420,22 @@ Success
   - **last_messageId:** The id of the last message in the previous request. see pagination
   - **last_message_timestamp:** The timestamp of the last message in the previous request. see [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination)
 - **Returns:** An array of [GiftMessage](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#giftmessage) objects
+- **Example**
+  ```
+  {
+    "status": "operation_success",
+    "error_message": null,
+    "response_data": [
+        {
+            "id": "367e3011-19fc-48a8-9ff0-47c46878f338",
+            "senderId": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
+            "body": "you are a wonderful person",
+            "timestamp": 1712218014157
+        },
+        ...
+    ]
+  }
+  ```
    
 #### Get notifications
 `GET /users/user/notifications`
@@ -475,6 +491,36 @@ Success
 - **Parameters:**
   - **last_roomId:** Id of the room in the previous request. See [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination)
 - **Returns:** Array of [Room](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#room) objects
+- **Example:**
+  ```
+  {
+    "status": "operation_success",
+    "error_message": null,
+    "response_data": [
+        {
+            "id": "96ca4ad7-a2e6-45c0-ac28-b1e4baf4a00a",
+            "hostId": "61a06576-619a-439a-b68a-336d9cef8d55",
+            "title": "lagos or abuja",
+            "colour": "#000000",
+            "creationTime": 1712221042851,
+            "participantCount": 1,
+            "peepedUsers": [
+                {
+                    "id": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
+                    "username": "ulekabo",
+                    "avatar": 5,
+                    "crip": {
+                        "count": 19,
+                        "rank": "Anonymous",
+                        "progress": 0.19
+                    }
+                },
+                ...
+            ]
+        }
+    ]
+  }
+  ```
 
 #### Interact with a room
 `POST /rooms/room`
@@ -504,6 +550,28 @@ Success
     - **last_post_timestamp:** _(Number)_ Timestamp of the last post in the previous request. See pagination.
     - **last_postId:** Id of the last post in the previous request. See [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination)
   - **Returns:** Array of [RoomPost](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#attributes-5) objects
+  - **Example:**
+    ```
+    {
+    "status": "operation_success",
+    "error_message": null,
+    "response_data": [
+        {
+            "id": "d3ff1d1d-5aca-4f8f-8d21-92af0e8c40bc",
+            "posterId": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
+            "posterUsername": "ulekabo",
+            "roomId": "96ca4ad7-a2e6-45c0-ac28-b1e4baf4a00a",
+            "timestamp": 1712260270776,
+            "body": "answer dey obvious na lol",
+            "flameCount": 0,
+            "flagCount": 0,
+            "mentions": null,
+            "flamed": false
+        },
+        ...
+    ]
+    }
+    ```
 
 
  #### Interact with a message in a room
