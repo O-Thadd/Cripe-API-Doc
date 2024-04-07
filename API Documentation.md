@@ -175,7 +175,7 @@ Represents a user
 #### Attributes
 - **id:** id of user
 - **username:** username of user
-- **avatar:** _(number)_ number indicating the avatar of the user
+- **avatar:** _(number)_ number indicating the avatar of the user. This ranges from 1 - 21. 21 represents the app icon as an avatar automatically asigned to pre-V2 users until they choose an avatar.
 - **crip:** A [Crip](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#crip) object. Summary of a the user's cripe rank details.
 
 ### Crip
@@ -229,13 +229,15 @@ Represents a user's cripe rank details
 `GET /posts`
 - **Description:** gets posts
 - **Security:** 0
+  > Token is not required.
+  > But to get a tailored response such as wether the user has flagged, flamed or voted in a post; provide a token.
+  > The requesting user is inferred from the token, and the response is tailored accordingly. If token is not provided or not valid, those fields will be null.
 - **Parameters:**
   - **postId:** id of a post. provide this to get a particular post
   - **posterId:** id of user. provide this to get posts by a particular user.
   - **parent_postId:** id of a post. provide this to get responses/replies to a post.
   - **last_post_timestamp:** _(Number)_ Timestamp of the last post in the previously returned posts. use after the 1st request to get more results. See [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination)
   - **last_postId:** same use-case as lastTimestamp. the postId of the last post in the previous request.
-  - **requesterId:** id of requester. Used to tailor response to requester. Such as indicating posts previously flamed, or polls already voted in
 - **Constraints:**
   - when postId is provided; posterId, parentPostId, lastPostId or lastPostTimestamp should not be provided
   - posterId and parentPostId should not be provided together
@@ -450,11 +452,17 @@ Success
 - **Security:** 1
 - **Parameters:**
   - **recipientId:** Id of the user the message is being sent to
-  - **body:** Body of the message being sent
+  - **index:** _(Number)_ This is the index of the message to send in the list returned from the `GET /users/giftMessages` end point.
 - **Returns:** The id of the message
 
+#### Get available gift messages
+`GET /users/giftMessages`
+- **Description:** Gets a list of all available gift messages that a user can send. Index of a message in the returned list is required in the `POST /users/user/giftMessages` end point
+- **Security:** 0
+- **Returns:** An array of strings. Each string is a gift message text.
 
-#### Get gift messages
+
+#### Get user's gift messages
 `GET /users/user/giftMessages`
 - **Description:** Gets a user's gift messages
 - **Security:** 1
