@@ -29,9 +29,8 @@ _...under construction..._
   - `flame_post_action`: flame a post
   - `unflame_post_action`: unflame a post
   - `vote_post_action`: vote an option in a poll post. The option to vote is provided in the `optionToVote` parameter.
-  - `unvote_post_action`: _not a specified feature. not yet impemented..._
   - `flag_post_action`: flag a post
-  - `unflag_post_action`: _not a specified feature. not yet impemented..._
+  - `unflag_post_action`: unflag a post
   - `delete_post_action`: delete a post. Such a request must come from the post owner
 
 - ### room_action
@@ -39,6 +38,7 @@ _...under construction..._
   This is a parameter in the [`POST /rooms/room`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#interact-with-a-room) endpoint. Used to specify the action to perform on a room.
   - `join_room_action`
   - `leave_room_action`
+  - `end_room_action`
 
 - ### room_post_action
 
@@ -53,6 +53,7 @@ _...under construction..._
 
   This is a parameter in the [`POST /users/user`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#interact-with-user) endpoint. Used to specify the action that should be performed on a user.
   - `reset_fcm_token_user_action`: Reset the fcm token. Should be used when a user logs out or deletes account. This stops notifications from being sent to the device.
+  - `update_user_action`: This updates a user. Such as for changing username, avatar or password.
   - `delete_user_action`: delete user
 - ### inAppMessage type
 
@@ -62,6 +63,7 @@ _...under construction..._
 
   This is an attribute in the [NotificationData](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#notificationdata) object. It indicates the event for which the notification is being sent.
   - `mention_notification_event`: when a user is mentioned/tagged in a post.
+  - `room_mention_notification_event:` when a user is mention/tagged in a post in a room.
   - `flame_notification_event`: when a user's post is flamed
   - `response_notification_event`: when another user responds/comments/replies to a user's post.
 
@@ -143,9 +145,10 @@ Represents a notification
 - **event:** the event being notified of. One of [notification event](https://github.com/O-Thadd/Cripe-API-Doc/edit/main/API%20Documentation.md#notificationevent) enum
 - **timestamp:** _(number)_ time of notification in milliseconds from epoch
 - **pop:** a suggestion of what to display in the notification for the user
-- **postAncestry:** _(array of strings)_ Contains ids of posts in the subject-post's lineage, starting with subject post till the top most post.
+- **postAncestry:** _(array of strings)_ Contains ids of posts in the subject-post's lineage, starting with subject post till the top most post. For a room tag notification, this will contain only two items, viz; first, the id of the post the user was tagged in. second, the id of the room.
 
-  e.g. postA has a comment, postB. And postB has a reply, postC. Then a user flames        postC. Notification will be sent to owner of postC about the flaming of the post that    just happened. The post ancestry array will be thus, [postC id, postB id, postA id]
+  e.g 1. postA has a comment, postB. And postB has a reply, postC. Then a user flames        postC. Notification will be sent to owner of postC about the flaming of the post that    just happened. The post ancestry array will be thus, [postC id, postB id, postA id]
+  e.g 2. user is tagged in postA inside roomA. The post ancestry will be thus, [postA id, roomA id]
 - **data:** contains any additional data. such as content of a gift message
 
 ### Post
@@ -176,14 +179,10 @@ Represents a user
 - **id:** id of user
 - **username:** username of user
 - **avatar:** _(number)_ number indicating the avatar of the user. This ranges from 1 - 21. 21 represents the app icon as an avatar automatically asigned to pre-V2 users until they choose an avatar.
-- **crip:** A [Crip](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#crip) object. Summary of a the user's cripe rank details.
-
-### Crip
-Represents a user's cripe rank details
-#### Attributes
-- **count:** _(Number)_ Total crips this user has
+- **crips:** _(Number)_ Number of crips the user has. This is earned by activities on the app. And is used send gift messages to other users.
 - **rank:** The cripe rank of this user. One of the [cripe ranks](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#cripe-rank) enum
-- **progress:** _(Number)_  A number between 0 and 1, representing the progress of the user in the current rank. This will be null if user is at the highest rank i.e. Veiled
+- **rankProgress:** _(Number)_  A number between 0 and 1, representing the progress of the user in the current rank. This will be null if user is at the highest rank i.e. Veiled
+
 
   
 
@@ -394,36 +393,21 @@ Success
     "error_message": null,
     "response_data": [
         {
-            "id": "4a8862aa-e528-4143-868d-81c352bc7e6c",
-            "username": "katolu",
-            "avatar": 10,
-            "crip": {
-                "count": 0,
-                "rank": "Anonymous",
-                "progress": 0.0
-            }
-        },
-        {
-            "id": "61a06576-619a-439a-b68a-336d9cef8d55",
-            "username": "mr. ule",
-            "avatar": 13,
-            "crip": {
-                "count": 220,
-                "rank": "Shadow",
-                "progress": 0.3
-            }
-        },
-        {
-            "id": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
+            "id": "82ec2fb4-a1cc-491f-899f-e5f003ded757",
             "username": "ulekabo",
-            "avatar": 5,
-            "crip": {
-                "count": 2,
-                "rank": "Anonymous",
-                "progress": 0.02
-            }
+            "avatar": 19,
+            "crips": 2,
+            "rank": "Anonymous",
+            "rankProgress": 0.02
         },
-        ...
+        {
+            "id": "fc973c0a-5494-42ac-8684-1ea6a99839a8",
+            "username": "master ule",
+            "avatar": 2,
+            "crips": 14,
+            "rank": "Anonymous",
+            "rankProgress": 0.16
+        }
     ]
   }
   ```
@@ -443,8 +427,14 @@ Success
 - **Security:** 2
 - **Parameter:**
   - **user_action:** _(Required)_ Action to be taken on the user. One of the [user_action](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#user_action) enum
+The following parameters only apply with `update_user_action`
+  - **username:** New username
+  - **avatar:** _(Number)_ New avatar
+  - **old_password:** Current password
+  - **new_password:** New password
 - **Constraints:**
   - userId provided must match owner of the token or password used to make the request
+- **Returns:** When there is a password change, returns the userId and new token in the `userId` and `token` fields respectively within a json object. Otherwise, returns null
 
 #### Send gift message
 `POST /users/user/giftMessages`
@@ -452,12 +442,12 @@ Success
 - **Security:** 1
 - **Parameters:**
   - **recipientId:** Id of the user the message is being sent to
-  - **index:** _(Number)_ This is the index of the message to send in the list returned from the `GET /users/giftMessages` end point.
+  - **index:** _(Number)_ This is the index of the message to send in the list returned from the [`GET /users/giftMessages`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#get-available-gift-messages) end point.
 - **Returns:** The id of the message
 
 #### Get available gift messages
 `GET /users/giftMessages`
-- **Description:** Gets a list of all available gift messages that a user can send. Index of a message in the returned list is required in the `POST /users/user/giftMessages` end point
+- **Description:** Gets a list of all available gift messages that a user can send. Index of a message in the returned list is required in the `POST [/users/user/giftMessages`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#send-gift-message) end point
 - **Security:** 0
 - **Returns:** An array of strings. Each string is a gift message text.
 
@@ -548,22 +538,20 @@ Success
     "error_message": null,
     "response_data": [
         {
-            "id": "96ca4ad7-a2e6-45c0-ac28-b1e4baf4a00a",
-            "hostId": "61a06576-619a-439a-b68a-336d9cef8d55",
-            "title": "lagos or abuja",
+            "id": "9055998c-a7ca-4e9e-a6b0-a1ea302d53f4",
+            "hostId": "fc973c0a-5494-42ac-8684-1ea6a99839a8",
+            "title": "bread or cake",
             "colour": "#000000",
-            "creationTime": 1712221042851,
+            "creationTime": 1712584773259,
             "participantCount": 1,
             "peepedUsers": [
                 {
-                    "id": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
+                    "id": "82ec2fb4-a1cc-491f-899f-e5f003ded757",
                     "username": "ulekabo",
-                    "avatar": 5,
-                    "crip": {
-                        "count": 19,
-                        "rank": "Anonymous",
-                        "progress": 0.19
-                    }
+                    "avatar": 19,
+                    "crips": 0,
+                    "rank": "Anonymous",
+                    "rankProgress": 0.0
                 },
                 ...
             ]
