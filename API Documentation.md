@@ -426,8 +426,9 @@ Success
 - **Description:** performs action on a user
 - **Security:** 2
 - **Parameter:**
-  - **user_action:** _(Required)_ Action to be taken on the user. One of the [user_action](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#user_action) enum
-The following parameters only apply with `update_user_action`
+  - **user_action:** _(Required)_ Action to be taken on the user. One of the [user_action](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#user_action) enum.
+
+  The following parameters only apply with `update_user_action`
   - **username:** New username
   - **avatar:** _(Number)_ New avatar
   - **old_password:** Current password
