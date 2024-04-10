@@ -199,7 +199,10 @@ Represents a user
 > 2:  Requires credentials. Provided as token as 1 above; or username and password as same-named parameters in the request.
 
 #### Base URl:
-`https://thadd-dev-realm.ey.r.appspot.com/v2`
+- **Production:** _...redacted..._
+- **Development:** `https://20240410t125807-dot-thadd-dev-realm.ey.r.appspot.com/v2`
+
+
 
 ### Posts
 #### Make a post
