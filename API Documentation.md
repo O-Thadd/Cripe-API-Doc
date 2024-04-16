@@ -1,5 +1,5 @@
 # Cripe API Reference V2
-The Cripe API is organized around REST. Our API has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, and verbs.
+The Cripe API is organized around REST. Our API has predictable resource-oriented URLs, accepts URL parameters, returns JSON-encoded responses, and uses standard HTTP response codes, and verbs.
 
 ## Responses
 Requests that do not require response data will only return a status and header with an empty response body.
@@ -14,8 +14,7 @@ Requests that require response data will always get a json with the following at
 ## Pagination
 Lists are always paginated. Requests are returned in batches of maximum of 50 items. The concerned endpoints use cursor-based pagination with `lastXid` parameter. Request for the first page does not require the parameter. Subsequent requests should provide the id of the last item in the previous response to get the next batch.
 These endpoints will always return a list. Even when a specific item is requested by unique identifier, a list of one item will be returned.
-Pagination parameter for users is `lastUserId` and that for posts is `lastPostId`
-> **Note:**   For requests for posts:
+> **Note:**   For requests for posts (both regular posts and posts in rooms):
 > - The parameter `lastPostTimestamp` is additionally required.
 > - Items are always returned in reverse chronological order. i.e. newest first.
 
@@ -89,8 +88,8 @@ This is a nested type in the [post](https://github.com/O-Thadd/Cripe-API-Doc/blo
 ### Pair:
 This is a nested type in the [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention) object. It represents an exact position where a tag/mention of user occurs in a post
 #### Attributes
-- **first:** _(number)_ Index of the first letter of an occurrence of the username in the post
-- **second:** _(number)_ second: Index of the last letter of the same occurrence of the username in the post
+- **first:** _(Number)_ Index of the first letter of an occurrence of the username in the post
+- **second:** _(Number)_ second: Index of the last letter of the same occurrence of the username in the post
 
 ### InAppMessage
 Represents an in-app message
@@ -114,25 +113,24 @@ Represents a gift message
 Represents a room
 #### Attributes
 - **id:** Unique identifier of the room
-- **hostId:** Id of the user who started this room i.e. the host
+- **host:** ([User](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#user)) User who started this room i.e. the host
 - **title:** Title of the room
 - **colour:** Colour theme of the room as hexadecimal RGB triples. e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
 - **creationTime:** _(Number)_ Time the room was created in millis from epoch
 - **participantCount:** _(Number)_ The number of users in the room
-- **peepedUsers:** Array of [user](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#user)s representing 5 or less randomly selected participants in the room
+- **peepedUsers:** (Array of [User](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#user)s) Represents 5 or less randomly selected participants in the room
 
 ### RoomPost
 Represents a message in a room
 #### Attributes
 - **id:** unique identifier of the post
-- **posterId:** id of user who made the post
-- **posterUsername:** name of user who made the post
+- **poster:** ([User](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#user)) User who made this post
 - **roomId:** id of the room inwhich this post was sent
-- **timestamp:** _(number)_ when post was made in milliseconds from epoch
+- **timestamp:** _(Number)_ when post was made in milliseconds from epoch
 - **body:** Content of the post
-- **flameCount:** _(number)_ number of flames post has
-- **flagCount:** _(number)_ number of times a post has been flagged. this will always be null except when the request is made by an admin
-- **mentions:** array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention)s. Each represents a user tagged/mentioned in the post
+- **flameCount:** _(Number)_ number of flames post has
+- **flagCount:** _(Number)_ number of times a post has been flagged. This will always be null except when the request is made by an admin
+- **mentions:** (Array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention)s). Each represents a user tagged/mentioned in the post
 - **flamed:** _(boolean)_ indicates if requester flamed this post
 
 
@@ -143,11 +141,12 @@ Represents a notification
 - **actorId:** id of user who performed the action being notified of
 - **actorUsername:** username of user who performed the action being notified of
 - **event:** the event being notified of. One of [notification event](https://github.com/O-Thadd/Cripe-API-Doc/edit/main/API%20Documentation.md#notificationevent) enum
-- **timestamp:** _(number)_ time of notification in milliseconds from epoch
+- **timestamp:** _(Number)_ time of notification in milliseconds from epoch
 - **pop:** a suggestion of what to display in the notification for the user
 - **postAncestry:** _(array of strings)_ Contains ids of posts in the subject-post's lineage, starting with subject post till the top most post. For a room tag notification, this will contain only two items, viz; first, the id of the post the user was tagged in. second, the id of the room.
 
   e.g 1. postA has a comment, postB. And postB has a reply, postC. Then a user flames        postC. Notification will be sent to owner of postC about the flaming of the post that    just happened. The post ancestry array will be thus, [postC id, postB id, postA id]
+  
   e.g 2. user is tagged in postA inside roomA. The post ancestry will be thus, [postA id, roomA id]
 - **data:** contains any additional data. such as content of a gift message
 
@@ -155,31 +154,30 @@ Represents a notification
 Represents a post
 #### Attributes
 - **id:** unique identifier of the post
-- **posterId:** id of user who made the post
-- **posterUsername:** name of user who made the post
-- **timestamp:** _(number)_ when post was made in milliseconds from epoch
-- **body:** _(array of strings)_ Each string represents a page of the post
+- **poster:** ([User](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#user)) User who made this post
+- **timestamp:** _(Number)_ when post was made in milliseconds from epoch
+- **body:** _(Array of Strings)_ Each string represents a page of the post
 - **background:** The background colour of the post as hexadecimal RGB triples with a leading '#' e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
-- **optionVotePairs:** _(map)_ Maps an option to number of votes accrued
-- **flameCount:** _(number)_ number of flames post has
-- **commentCount:** _(number)_ number of comments a post has.
+- **optionVotePairs:** _(Map)_ Maps an option to number of votes accrued
+- **flameCount:** _(Number)_ number of flames post has
+- **commentCount:** _(Number)_ number of comments a post has.
 
   NB: this is only direct comments. Comments of comments are not reflected here
-- **flagCount:** _(number)_ number of times a post has been flagged. this will always be null except when the request is made by an admin
-- **duration:** _(number)_ applies for a poll. Indicates how long from the time of posting that a poll will remain open to votes
-- **closed:**  _(boolean)_ Applies for a poll. indicates if the poll is closed.
-- **parentPostId:** applies if it is a reply/comment. Id of post that this post was made as response to.
-- **mentions:** array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention)s. Each represents a user tagged/mentioned in the post
-- **flamed:** _(boolean)_ indicates if requester flamed this post
-- **voted:** _(boolean)_ indicates if requester voted this post(poll)
+- **flagCount:** _(Number)_ number of times a post has been flagged. this will always be null except when the request is made by an admin
+- **duration:** _(Number)_ Applies for a poll. Indicates how long from the time of posting that a poll will remain open to votes.
+- **closed:**  _(Boolean)_ Applies for a poll. Indicates if the poll is closed.
+- **parentPostId:** Applies if it is a reply/comment. Id of post that this post was made as response to.
+- **mentions:** (Array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention)s). Each represents a user tagged/mentioned in the post
+- **flamed:** _(Boolean)_ Indicates if requester flamed this post
+- **voted:** _(Boolean)_ Indicates if requester voted this post(poll)
 
 ### User
 Represents a user
 #### Attributes
 - **id:** id of user
 - **username:** username of user
-- **avatar:** _(number)_ number indicating the avatar of the user. This ranges from 1 - 21. 21 represents the app icon as an avatar automatically asigned to pre-V2 users until they choose an avatar.
-- **crips:** _(Number)_ Number of crips the user has. This is earned by activities on the app. And is used send gift messages to other users.
+- **avatarUrl:** Download url for the avatar
+- **crips:** _(Number)_ Number of crips the user has. This is earned by activities on the app. And is used to send gift messages to other users.
 - **rank:** The cripe rank of this user. One of the [cripe ranks](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#cripe-rank) enum
 - **rankProgress:** _(Number)_  A number between 0 and 1, representing the progress of the user in the current rank. This will be null if user is at the highest rank i.e. Veiled
 
@@ -210,11 +208,11 @@ Represents a user
 - **Description:** makes a new post
 - **Security**: 1
 - **Parameters:**
-  - **body:** _(required)_ Array of strings. Each value is a string that is the content of a page in the new post. (when the post is a poll then this array has to have a single value that is the body of the poll, since polls cannot have multiple pages).
-  - **options:**  _(array of strings)_ Used with a poll. each value is an option for the new poll
-  - **duration:** _(number)_ Used when it is a post. Duration of poll in milliseconds.
+  - **body:** _(required)_ (Array of Strings). Each value is a string that is the content of a page in the new post. (when the post is a poll then this array has to have a single value that is the body of the poll, since polls cannot have multiple pages).
+  - **options:**  _(Array of Strings)_ Used with a poll. each value is an option for the new poll
+  - **duration:** _(Number)_ Used when it is a post. Duration of poll in milliseconds.
   - **parent_postId:** For responses i.e. comments. The id of the post that this post is responding to.
-  - **mentions:** _(array of [mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention)s)_ Each value is a mention object which represents a user tagged in a post
+  - **mentions:** _(Array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention)s)_ Each value is a mention object which represents a user tagged in a post
   - **background:** The background colour of the post as hexadecimal RGB triples. e.g. '#FFFFFF' for white, '#800080' for purple, '#000000' for black
 
 - **returns:** the id of the newly created post
@@ -345,7 +343,7 @@ Represents a user
 - **Parameters:**
   - **username:** _(required)_ Username of the new user
   - **password:** _(required)_ Password for the new user
-  - **avatar:** _(required)_ _(Number)_ Number that represents the avater. Between 1 and 20, for the 20 currently available avatars
+  - **avatar:** _(required)_ Download url for the avatar. Available download urls are gotten from `GET /users/avatars` endpoint.
   - **fcm_token** _(required)_ Firebase Cloud Messagging (FCM) token for the app on the client device. This subserves push-notification feature.
 - **Constraints:** Request will fail with appropriate message if a user with same username already exists.
 - **Returns:** json with the following fields:
@@ -433,11 +431,9 @@ Success
 
   The following parameters only apply with `update_user_action`
   - **username:** New username
-  - **avatar:** _(Number)_ New avatar
+  - **avatar:** New avatar url
   - **old_password:** Current password
   - **new_password:** New password
-- **Constraints:**
-  - userId provided must match owner of the token or password used to make the request
 - **Returns:** When there is a password change, returns the userId and new token in the `userId` and `token` fields respectively within a json object. Otherwise, returns null
 
 #### Send gift message
@@ -599,17 +595,23 @@ Success
     "error_message": null,
     "response_data": [
         {
-            "id": "d3ff1d1d-5aca-4f8f-8d21-92af0e8c40bc",
-            "posterId": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
-            "posterUsername": "ulekabo",
-            "roomId": "96ca4ad7-a2e6-45c0-ac28-b1e4baf4a00a",
-            "timestamp": 1712260270776,
-            "body": "answer dey obvious na lol",
+            "id": "bbf71c11-5d06-4879-9722-e932f3282891",
+            "poster": {
+                "id": "995ef95e-c128-42d5-a81c-57b7239d53a3",
+                "username": "sir ule",
+                "avatarUrl": "https://storage.googleapis.com/download/storage/v1/b/thadd-dev-realm.appspot.com/o/cripe%2Fimages%2Favatar-set%2F16.png?generation=1713183988438053&alt=media",
+                "crips": 18,
+                "rank": "Anonymous",
+                "rankProgress": 0.09
+            },
+            "roomId": "8cbe34bb-f1e3-4174-8b9f-1ba21dee024d",
+            "timestamp": 1713258591055,
+            "body": "its cake and theres no possible counter argument",
             "flameCount": 0,
             "flagCount": 0,
             "mentions": null,
             "flamed": false
-        },
+        }
         ...
     ]
     }
