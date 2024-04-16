@@ -564,6 +564,7 @@ Success
 - **Description:** Gets rooms
 - **Security:** 0
 - **Parameters:**
+  - **search_term:** Whole or part of a room title. Use this to search for rooms by title
   - **last_roomId:** Id of the room in the previous request. See [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination)
 - **Returns:** Array of [Room](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#room) objects
 - **Example:**
