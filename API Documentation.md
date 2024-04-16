@@ -169,7 +169,7 @@ Represents a post
 - **parentPostId:** Applies if it is a reply/comment. Id of post that this post was made as response to.
 - **mentions:** (Array of [Mention](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#mention)s). Each represents a user tagged/mentioned in the post
 - **flamed:** _(Boolean)_ Indicates if requester flamed this post
-- **voted:** _(Boolean)_ Indicates if requester voted this post(poll)
+- **voted:** Applies for a post. The option the requester voted for in this poll. Null if the requester hasn't/didn't vote.
 
 ### User
 Represents a user
@@ -431,7 +431,7 @@ Success
 
   The following parameters only apply with `update_user_action`
   - **username:** New username
-  - **avatar:** New avatar url
+  - **avatar:** _(Number)_ Index of avatar in the list as gotten from the `GET /users/avatars` endpoint
   - **old_password:** Current password
   - **new_password:** New password
 - **Returns:** When there is a password change, returns the userId and new token in the `userId` and `token` fields respectively within a json object. Otherwise, returns null
@@ -447,10 +447,15 @@ Success
 
 #### Get available gift messages
 `GET /users/giftMessages`
-- **Description:** Gets a list of all available gift messages that a user can send. Index of a message in the returned list is required in the `POST [/users/user/giftMessages`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#send-gift-message) end point
+- **Description:** Gets a list of all available gift messages that a user can send. Index of a message in the returned list is required in the [`POST /users/user/giftMessages`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#send-gift-message) end point
 - **Security:** 0
 - **Returns:** An array of strings. Each string is a gift message text.
 
+#### Get available avatars
+`GET /users/avatars`
+- **Description:** Gets a list of all available avatars that a user can use. Index of a message in the returned list is required in the [`POST /users`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#register-a-new-user) and [`POST /users/user`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#interact-with-user) endpoints
+- **Security:** 0
+- **Returns:** An arrar of Strings. Each string is download url for an avatar
 
 #### Get user's gift messages
 `GET /users/user/giftMessages`
