@@ -198,7 +198,7 @@ Represents a user
 
 #### Base URl:
 - **Production:** _...redacted..._
-- **Development:** `https://20240410t125807-dot-thadd-dev-realm.ey.r.appspot.com/v2`
+- **Development:** `https://20240417t001343-dot-thadd-dev-realm.ey.r.appspot.com/v2`
 
 
 
@@ -251,64 +251,85 @@ Represents a user
     "error_message": null,
     "response_data": [
         {
-            "id": "194e1ec6-81a6-4b5d-80f6-7d48083b265e",
-            "posterId": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
-            "posterUsername": "ulekabo",
-            "timestamp": 1712220073854,
+            "id": "bdbf97d8-9e6f-4803-bdbb-e3f9cea792ff",
+            "poster": {
+                "id": "dcbf8294-6bff-47cf-b5f0-a6db6937ca88",
+                "username": "felicia",
+                "avatarUrl": "https://firebasestorage.googleapis.com/v0/b/thadd-dev-realm.appspot.com/o/cripe%2Fimages%2Fapp-icon.png?alt=media&token=a93ab679-68c1-44db-ad95-9777ef65b7ff",
+                "crips": 0,
+                "rank": null,
+                "rankProgress": null
+            },
+            "timestamp": 1712781555036,
             "body": [
-                "honestly kai. you sabi"
+                "\nEID MUBARAK 🎉 🎉 كل عام وانتي بخير\n\n🕌🕊️🎉"
             ],
             "background": "#000000",
             "optionVotePairs": null,
-            "flameCount": 0,
+            "flameCount": 4,
+            "commentCount": 3,
+            "flagCount": null,
+            "duration": null,
+            "closed": null,
+            "parentPostId": null,
+            "mentions": null,
+            "flamed": null,
+            "voted": null,
+            "flagged": null
+        },
+        {
+            "id": "d81c2529-3014-4b5a-b85f-95c145059043",
+            "poster": {
+                "id": "d420e1e9-2389-44ae-a19a-9edb0a7e1a82",
+                "username": "ule",
+                "avatarUrl": "https://firebasestorage.googleapis.com/v0/b/thadd-dev-realm.appspot.com/o/cripe%2Fimages%2Fapp-icon.png?alt=media&token=a93ab679-68c1-44db-ad95-9777ef65b7ff",
+                "crips": 0,
+                "rank": null,
+                "rankProgress": null
+            },
+            "timestamp": 1712766101821,
+            "body": [
+                "Let's play a game?\n\nKnock Knock!"
+            ],
+            "background": "#000000",
+            "optionVotePairs": null,
+            "flameCount": 4,
+            "commentCount": 6,
+            "flagCount": null,
+            "duration": null,
+            "closed": null,
+            "parentPostId": null,
+            "mentions": null,
+            "flamed": null,
+            "voted": null,
+            "flagged": null
+        },
+        {
+            "id": "c537b2fc-1913-448e-bb44-69dc61fe67e9",
+            "poster": {
+                "id": "1e968128-149c-4398-a979-552d1401edfe",
+                "username": "ikechukwu",
+                "avatarUrl": "https://firebasestorage.googleapis.com/v0/b/thadd-dev-realm.appspot.com/o/cripe%2Fimages%2Fapp-icon.png?alt=media&token=a93ab679-68c1-44db-ad95-9777ef65b7ff",
+                "crips": 0,
+                "rank": null,
+                "rankProgress": null
+            },
+            "timestamp": 1712724886973,
+            "body": [
+                "Cripe cripe cripe.\nAn amazing place\n😏"
+            ],
+            "background": "#000000",
+            "optionVotePairs": null,
+            "flameCount": 2,
             "commentCount": 1,
             "flagCount": null,
             "duration": null,
             "closed": null,
-            "parentPostId": "295de2f6-0bb2-42af-9e15-8b44f1f339ee",
+            "parentPostId": null,
             "mentions": null,
-            "flamed": false,
-            "voted": null
-        },
-        {
-            "id": "44a2aabd-41b1-4c6f-bf3c-92614bed55b0",
-            "posterId": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
-            "posterUsername": "ulekabo",
-            "timestamp": 1712218731266,
-            "body": [
-                "true talk. no cap"
-            ],
-            "background": "#000000",
-            "optionVotePairs": null,
-            "flameCount": 0,
-            "commentCount": 0,
-            "flagCount": null,
-            "duration": null,
-            "closed": null,
-            "parentPostId": "295de2f6-0bb2-42af-9e15-8b44f1f339ee",
-            "mentions": null,
-            "flamed": false,
-            "voted": null
-        },
-        {
-            "id": "2548a46f-921e-48fe-a130-49741ac2f70a",
-            "posterId": "c27cf047-46d0-48b2-99b7-08a1ee77f4fe",
-            "posterUsername": "ulekabo",
-            "timestamp": 1712186935110,
-            "body": [
-                "for real mehn. it's so cool"
-            ],
-            "background": "#000000",
-            "optionVotePairs": null,
-            "flameCount": 0,
-            "commentCount": 0,
-            "flagCount": null,
-            "duration": null,
-            "closed": null,
-            "parentPostId": "295de2f6-0bb2-42af-9e15-8b44f1f339ee",
-            "mentions": null,
-            "flamed": false,
-            "voted": null
+            "flamed": null,
+            "voted": null,
+            "flagged": null
         },
         ...
     ]
@@ -343,7 +364,7 @@ Represents a user
 - **Parameters:**
   - **username:** _(required)_ Username of the new user
   - **password:** _(required)_ Password for the new user
-  - **avatar:** _(required)_ Download url for the avatar. Available download urls are gotten from `GET /users/avatars` endpoint.
+  - **avatar:** _(required)_ _(Number)_ Index of avatar in the list as gotten from the [`GET /users/avatars`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#get-available-avatars)
   - **fcm_token** _(required)_ Firebase Cloud Messagging (FCM) token for the app on the client device. This subserves push-notification feature.
 - **Constraints:** Request will fail with appropriate message if a user with same username already exists.
 - **Returns:** json with the following fields:
@@ -394,21 +415,30 @@ Success
     "error_message": null,
     "response_data": [
         {
-            "id": "82ec2fb4-a1cc-491f-899f-e5f003ded757",
-            "username": "ulekabo",
-            "avatar": 19,
-            "crips": 2,
-            "rank": "Anonymous",
-            "rankProgress": 0.02
+            "id": "08648163-5ce7-469a-bf32-f4fde0198b02",
+            "username": "Niku",
+            "avatarUrl": "https://firebasestorage.googleapis.com/v0/b/thadd-dev-realm.appspot.com/o/cripe%2Fimages%2Fapp-icon.png?alt=media&token=a93ab679-68c1-44db-ad95-9777ef65b7ff",
+            "crips": 0,
+            "rank": null,
+            "rankProgress": null
         },
         {
-            "id": "fc973c0a-5494-42ac-8684-1ea6a99839a8",
-            "username": "master ule",
-            "avatar": 2,
-            "crips": 14,
-            "rank": "Anonymous",
-            "rankProgress": 0.16
-        }
+            "id": "14e13264-b8df-481a-99d5-9de174481f2d",
+            "username": "riccy06tUNNlion",
+            "avatarUrl": "https://firebasestorage.googleapis.com/v0/b/thadd-dev-realm.appspot.com/o/cripe%2Fimages%2Fapp-icon.png?alt=media&token=a93ab679-68c1-44db-ad95-9777ef65b7ff",
+            "crips": 0,
+            "rank": null,
+            "rankProgress": null
+        },
+        {
+            "id": "17346192-5b0e-441e-95fc-6ed444e04fba",
+            "username": "Luffy",
+            "avatarUrl": "https://firebasestorage.googleapis.com/v0/b/thadd-dev-realm.appspot.com/o/cripe%2Fimages%2Fapp-icon.png?alt=media&token=a93ab679-68c1-44db-ad95-9777ef65b7ff",
+            "crips": 0,
+            "rank": null,
+            "rankProgress": null
+        },
+        ...
     ]
   }
   ```
@@ -431,7 +461,7 @@ Success
 
   The following parameters only apply with `update_user_action`
   - **username:** New username
-  - **avatar:** _(Number)_ Index of avatar in the list as gotten from the `GET /users/avatars` endpoint
+  - **avatar:** _(Number)_ Index of avatar in the list as gotten from the [`GET /users/avatars`](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#get-available-avatars) endpoint
   - **old_password:** Current password
   - **new_password:** New password
 - **Returns:** When there is a password change, returns the userId and new token in the `userId` and `token` fields respectively within a json object. Otherwise, returns null
@@ -543,20 +573,27 @@ Success
     "error_message": null,
     "response_data": [
         {
-            "id": "9055998c-a7ca-4e9e-a6b0-a1ea302d53f4",
-            "hostId": "fc973c0a-5494-42ac-8684-1ea6a99839a8",
+            "id": "8cbe34bb-f1e3-4174-8b9f-1ba21dee024d",
+            "host": {
+                "id": "995ef95e-c128-42d5-a81c-57b7239d53a3",
+                "username": "sir ule",
+                "avatarUrl": "https://storage.googleapis.com/download/storage/v1/b/thadd-dev-realm.appspot.com/o/cripe%2Fimages%2Favatar-set%2F16.png?generation=1713183988438053&alt=media",
+                "crips": 18,
+                "rank": "Anonymous",
+                "rankProgress": 0.09
+            },
             "title": "bread or cake",
             "colour": "#000000",
-            "creationTime": 1712584773259,
+            "creationTime": 1713258345340,
             "participantCount": 1,
             "peepedUsers": [
                 {
-                    "id": "82ec2fb4-a1cc-491f-899f-e5f003ded757",
-                    "username": "ulekabo",
-                    "avatar": 19,
-                    "crips": 0,
+                    "id": "995ef95e-c128-42d5-a81c-57b7239d53a3",
+                    "username": "sir ule",
+                    "avatarUrl": "https://storage.googleapis.com/download/storage/v1/b/thadd-dev-realm.appspot.com/o/cripe%2Fimages%2Favatar-set%2F16.png?generation=1713183988438053&alt=media",
+                    "crips": 18,
                     "rank": "Anonymous",
-                    "rankProgress": 0.0
+                    "rankProgress": 0.09
                 },
                 ...
             ]
