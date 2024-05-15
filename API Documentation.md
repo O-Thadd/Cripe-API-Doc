@@ -401,7 +401,7 @@ Success
   - **userId:** userId of user to be retrieved
   - **username:** username of user to be retrieved
   - **search_term:** whole or part of a username. used to search for users by username
-  - **last_userId:** the full username of the last user in the previous page. used after the 1st request to get subsequent pages. see [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination).
+  - **last_userId:** the userId of the last user in the previous page. used after the 1st request to get subsequent pages. see [pagination](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#pagination).
 - **Constraints:**
 
   one, and only one of userId, username and searchTerm may be provided
