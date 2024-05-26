@@ -198,7 +198,7 @@ Represents a user
 
 #### Base URl:
 - **Production:** _...redacted..._
-- **Development:** `https://20240417t001343-dot-thadd-dev-realm.ey.r.appspot.com/v2`
+- **Development:** `https://20240526t165952-dot-thadd-dev-realm.ey.r.appspot.com/v2`
 
 
 
