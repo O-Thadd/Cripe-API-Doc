@@ -180,6 +180,8 @@ Represents a user
 - **crips:** _(Number)_ Number of crips the user has. This is earned by activities on the app. And is used to send gift messages to other users.
 - **rank:** The cripe rank of this user. One of the [cripe ranks](https://github.com/O-Thadd/Cripe-API-Doc/blob/main/API%20Documentation.md#cripe-rank) enum
 - **rankProgress:** _(Number)_  A number between 0 and 1, representing the progress of the user in the current rank. This will be null if user is at the highest rank i.e. Veiled
+- **flamesReceived:** _(Number)_ The number of flames the user has received across all their posts including comments
+- **postsMade:** _(Number)_ The number of posts the user has made including comments.
 
 
   
