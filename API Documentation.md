@@ -200,7 +200,7 @@ Represents a user
 
 #### Base URl:
 - **Production:** _...redacted..._
-- **Development:** `https://cripe-development-dot-thadd-dev-realm.ey.r.appspot.com/v2`
+- **Development:** `https://cripe-development-dot-cripe-62680.ey.r.appspot.com/v2`
 
 
 
